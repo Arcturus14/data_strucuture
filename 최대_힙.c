@@ -11,30 +11,31 @@ typedef struct {
 typedef struct {
     HeapElement elements[MAX_HEAP_SIZE];
     int size;
-} Heap;  // ÃÖ´ë Èü
+} Heap;  // ìµœëŒ€ íž™
 
-// ÃÊ±âÈ­ ÇÔ¼ö
+// ì´ˆê¸°í™” í•¨ìˆ˜
 void init_heap(Heap* heap) { heap->size = 0; }
 
-// »ðÀÔ ÇÔ¼ö
+// ì‚½ìž… í•¨ìˆ˜
 void insert_heap(Heap* heap, HeapElement item) {
     int current = ++(heap->size);
-    //  Æ®¸®¸¦ °Å½½·¯ ¿Ã¶ó°¡¸é¼­ ºÎ¸ð ³ëµå¿Í ºñ±³ÇÏ´Â °úÁ¤
+    //  íŠ¸ë¦¬ë¥¼ ê±°ìŠ¬ëŸ¬ ì˜¬ë¼ê°€ë©´ì„œ ë¶€ëª¨ ë…¸ë“œì™€ ë¹„êµí•˜ëŠ” ê³¼ì •
     while (current > 1 && item.key > heap->elements[current / 2].key) {
+        // ì¶”ê°€í•œ ìœ„ì¹˜ì— ë¶€ëª¨ ë…¸ë“œ ë‚´ë¦¬ê¸°
         heap->elements[current] = heap->elements[current / 2];
-        current /= 2;
+        current /= 2;    // ì¶”ê°€í•œ ë…¸ë“œ ì»¤ì„œ ì˜¬ë¦¬ê¸°
         /*** Fill the code ***/
     }
-    heap->elements[current] = item;  // »õ·Î¿î ³ëµå¸¦ »ðÀÔ
+    heap->elements[current] = item;  // ìƒˆë¡œìš´ ìœ„ì¹˜ì— ì €ìž¥
 }
 
-// ÃÖ´ë ÈüÀÇ ÃÖ´ë ¿ø¼Ò¸¦ »èÁ¦ÇÏ´Â ÇÔ¼ö
+// ìµœëŒ€ íž™ì˜ ìµœëŒ€ ì›ì†Œë¥¼ ì‚­ì œí•˜ëŠ” í•¨ìˆ˜
 HeapElement delete_heap(Heap* heap) {
     int parent, child;
     HeapElement item, temp;
 
-    item = heap->elements[1];
-    temp = heap->elements[(heap->size)--];
+    item = heap->elements[1];    // ì‚­ì œí•  ë…¸ë“œ
+    temp = heap->elements[(heap->size)--];    // ìœ„ë¡œ ì˜¬ë¦´ ë…¸ë“œ (ë§ˆì§€ë§‰ë…¸ë“œ)
 
     parent = 1;
     child = 2;
@@ -43,14 +44,14 @@ HeapElement delete_heap(Heap* heap) {
         /*** Fill the code ***/
         if ((child < heap->size) &&
             (heap->elements[child].key < heap->elements[child + 1].key))
-            child++;    // ºñ±³ ´ë»óÀ» ¿À¸¥ÂÊ ÀÚ½ÄÀ¸·Î º¯°æ
+            child++;    // ë¹„êµ ëŒ€ìƒì„ ì˜¤ë¥¸ìª½ ìžì‹ìœ¼ë¡œ ë³€ê²½
         if (temp.key >= heap->elements[child].key)
-            break;  // temp°¡ childº¸´Ù Å©¸é break
+            break;  // tempê°€ childë³´ë‹¤ í¬ë©´ break
         heap->elements[parent] = heap->elements[child];
-        // ºÎ¸ð ³ëµå¸¦ ÀÚ½Ä ³ëµå·Î µ¤¾î¾´´Ù
+        // ë¶€ëª¨ ë…¸ë“œë¥¼ ìžì‹ ë…¸ë“œë¡œ ë®ì–´ì“´ë‹¤
 
-        parent = child; // ¹æ±Ý ¿Ã¸° ÀÚ½ÄÀÌ »õ·Î¿î ºÎ¸ð°¡ µÊ
-        child *= 2;     // ±× ºÎ¸ðÀÇ ¿ÞÂÊ ÀÚ½ÄÀ¸·Î ÀÚ½Ä ÀÎµ¦½º ÀÌµ¿
+        parent = child; // ë°©ê¸ˆ ì˜¬ë¦° ìžì‹ì´ ìƒˆë¡œìš´ ë¶€ëª¨ê°€ ë¨
+        child *= 2;     // ê·¸ ë¶€ëª¨ì˜ ì™¼ìª½ ìžì‹ìœ¼ë¡œ ìžì‹ ì¸ë±ìŠ¤ ì´ë™
     }
     /*** Fill the code ***/
     heap->elements[parent] = temp;
@@ -97,3 +98,4 @@ int main() {
     free(heap);
     return 0;
 }
+
